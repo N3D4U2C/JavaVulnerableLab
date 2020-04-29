@@ -21,7 +21,7 @@ jobs:
             ${CX_FLOW_EXE} --scan --cx-team="${CX_TEAM}" --cx-project="${CX_PROJECT}" --app="${CX_PROJECT}" --f=. 
             mv *.zip cx.zip
       - store_artifacts:
-          path: 
+          paths: 
             - cx.zip
             - cx.json
 
