@@ -9,21 +9,16 @@ jobs:
   cx-scan:
     docker:
       - image: docker.io/checkmarxts/cxflow
-    environment:
-      CX_PROJECT: JavaVulnerableLab
-      CX_TEAM: \CxServer\SP\Checkmarx
     steps:
       - checkout
       - run:
           name: "Checkmarx Scan"
           command: |
             echo $MY_ENCODED_VALUE | base64 -d > application.yml
-            ${CX_FLOW_EXE} --scan --cx-team="${CX_TEAM}" --cx-project="${CX_PROJECT}" --app="${CX_PROJECT}" --f=. 
+            ${CX_FLOW_EXE} --scan --cx-team="\CxServer\SP\Checkmarx" --cx-project="JavaVulnerableLab" --f=. 
             mv *.zip cx.zip
       - store_artifacts:
-          paths: 
-            - cx.zip
-            - cx.json
+          path: cx.*
 
 workflows:
   version: 2
