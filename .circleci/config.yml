@@ -1,5 +1,9 @@
 version: 2.1
 
+environment:
+  CX_PROJECT: JavaVulnerableLab
+  CX_TEAM: \CxServer\SP\Checkmarx
+
 executors:
   docker:
     docker:
@@ -11,9 +15,14 @@ jobs:
       - image: docker.io/checkmarxts/cxflow
     steps:
       - checkout
-      - run: java -jar /app/cx-flow.jar --spring.config.location=./application.yml
+      - run:
+          name: "Checkmarx Scan"
+          command: |
+            echo $MY_ENCODED_VALUE | base64 -d > application.yml
+            ${CX_FLOW_EXE} --scan --cx-team="${CX_TEAM}" --cx-project="${CX_PROJECT}" --app="${CX_PROJECT}" --f=. 
+            mv *.zip cx.zip
       - store_artifacts:
-          path: build/libs
+          path: cx.zip
 
 workflows:
   version: 2
