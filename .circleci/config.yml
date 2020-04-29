@@ -14,7 +14,7 @@ jobs:
       - run:
           name: "Checkmarx Scan"
           command: |
-            echo ${CX_FLOW_CONFIG] | base64 -d > application.yml
+            echo ${CX_FLOW_CONFIG} | base64 -d > application.yml
             cat application.yml
             ${CX_FLOW_EXE} --scan --cx-team="\CxServer\SP\Checkmarx" --cx-project="JavaVulnerableLab" --f=. 
             mv *.zip cx.zip
