@@ -1,9 +1,5 @@
 version: 2.1
 
-environment:
-  CX_PROJECT: JavaVulnerableLab
-  CX_TEAM: \CxServer\SP\Checkmarx
-
 executors:
   docker:
     docker:
@@ -13,6 +9,9 @@ jobs:
   cx-scan:
     docker:
       - image: docker.io/checkmarxts/cxflow
+    environment:
+      CX_PROJECT: JavaVulnerableLab
+      CX_TEAM: \CxServer\SP\Checkmarx
     steps:
       - checkout
       - run:
@@ -22,7 +21,9 @@ jobs:
             ${CX_FLOW_EXE} --scan --cx-team="${CX_TEAM}" --cx-project="${CX_PROJECT}" --app="${CX_PROJECT}" --f=. 
             mv *.zip cx.zip
       - store_artifacts:
-          path: cx.zip
+          path: 
+            - cx.zip
+            - cx.json
 
 workflows:
   version: 2
