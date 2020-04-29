@@ -15,10 +15,15 @@ jobs:
           name: "Checkmarx Scan"
           command: |
             echo ${CX_FLOW_CONFIG} | base64 -d > application.yml
-            ${CX_FLOW_EXE} --scan --cx-team="\CxServer\SP\Checkmarx" --cx-project="${CIRCLE_PROJECT_REPONAME}" --app="${CIRCLE_PROJECT_REPONAME}" --f=. 
-            mv *.zip cx.zip
+            ${CX_FLOW_EXE} \
+            --scan \
+            --cx-team="\CxServer\SP\Checkmarx" \
+            --cx-project="${CIRCLE_PROJECT_REPONAME}" \
+            --app="${CIRCLE_PROJECT_REPONAME}" \
+            --f=. \
+            --cx-flow.break-build=false 
       - store_artifacts:
-          path: cx.*
+          path: cx.json
 
 workflows:
   version: 2
