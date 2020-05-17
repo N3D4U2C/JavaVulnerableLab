@@ -4,7 +4,7 @@ orbs:
   cxflow: checkmarx-ts/cxflow@1.0.1
 
 jobs:
-  build:
+  cx-scan:
     executor: cxflow/default
     steps:
       - checkout
