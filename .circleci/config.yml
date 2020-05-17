@@ -1,30 +1,20 @@
 version: 2.1
 
-executors:
-  docker:
-    docker:
-      - image: circleci/golang:1.9
+orbs:
+  cxflow: checkmarx-ts/cxflow@1.0.1
 
 jobs:
-  cx-scan:
-    docker:
-      - image: docker.io/checkmarxts/cxflow
+  build:
+    executor: cxflow/default
     steps:
       - checkout
-      - run:
-          name: "Checkmarx Scan"
-          command: |
-            echo ${CX_FLOW_CONFIG} | base64 -d > application.yml
-            ${CX_FLOW_EXE} \
-            --scan \
-            --cx-team="\CxServer\SP\Checkmarx" \
-            --cx-project="${CIRCLE_PROJECT_REPONAME}" \
-            --app="${CIRCLE_PROJECT_REPONAME}" \
-            --f=. \
-            --cx-flow.break-build=false 
+      - cxflow/scan:
+          team: "\\CxServer\\SP\\Checkmarx"
+          preset: "Checkmarx Express"
+          report-file: checkmarx.json
       - store_artifacts:
-          path: cx.json
-
+          path: checkmarx.json
+          
 workflows:
   version: 2
   build_deploy:
