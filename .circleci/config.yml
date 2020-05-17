@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  cxflow: checkmarx-ts/cxflow@dev:098afe4
+  cxflow: checkmarx-ts/cxflow@dev:5cc1e92
 
 jobs:
   cx-scan:
