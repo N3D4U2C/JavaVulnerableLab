@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  cxflow: checkmarx-ts/cxflow@dev:alpha
+  cxflow: checkmarx-ts/cxflow@1.0.4
           
 workflows:
   version: 2
@@ -10,11 +10,11 @@ workflows:
       - cxflow/results:
           project: "Riches"
           team: "\\CxServer\\SP\\Checkmarx"    
-#      - cxflow/scan:
-#          team: "\\CxServer\\SP\\Checkmarx"
-#          preset: "Checkmarx Express"
-#          report-file: vulns.json
-#          filters:
-#            branches:
-#              only:
-#                - master
+      - cxflow/scan:
+          team: "\\CxServer\\SP\\Checkmarx"
+          preset: "Checkmarx Express"
+          report-file: vulns.json
+          filters:
+            branches:
+              only:
+                - master
